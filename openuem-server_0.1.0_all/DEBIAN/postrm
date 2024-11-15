@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+case "$1" in
+    remove|purge)
+
+        # Remove all package's questions from debconf's database.
+        db_purge
+
+        # Remove user
+        if getent passwd | grep -q '^openuem:'; then
+            userdel openuem
+        fi  
+        
+        # Remove config directory
+        if [ -d /etc/openuem-server ]; then
+            rm -rf /etc/openuem-server
+        fi
+
+        # Remove certificates directory
+        # rm -rf /etc/openuem-server/certificates
+
+        # # Remove CA certificate from local trusted store
+        # rm -f /usr/local/share/ca-certificates/openuem.crt
+        # update-ca-certificates
+    ;;
+
+    *)
+        exit 0
+    ;;
+esac
+
+exit 0

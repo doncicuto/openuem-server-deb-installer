@@ -21,3 +21,7 @@ The installer will ask for the database access information. It will be asked for
 - Database
 
 The installer will offer to generate the required digital certificates. The database is required and must be running.
+
+## How to create the package
+
+dpkg-deb --build ./openuem-server_0.1.0_all

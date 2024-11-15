@@ -1,0 +1,260 @@
+Template: openuem-server/select-components
+Type: multiselect
+Choices: OpenUEM Web Console, OpenUEM NATS Server, OpenUEM Agent Worker, OpenUEM Notification Worker, OpenUEM Cert Manager Worker, OpenUEM OCSP Responder
+Default: OpenUEM Web Console, OpenUEM NATS Server, OpenUEM Agent Worker, OpenUEM Notification Worker, OpenUEM Cert Manager Worker, OpenUEM OCSP Responder
+Description: Select components to be installed
+ OpenUEM has many components that can be installed on the same machine or distributed on several machines
+
+Template: openuem-server/postgres-host
+Type: string
+Default: localhost
+Description: Postgres server (required)
+ Specify the OpenUEM database connection parameters
+
+Template: openuem-server/postgres-port
+Type: string
+Default: 5432
+Description: Postgres port (required)
+ Specify the OpenUEM database connection parameters
+
+Template: openuem-server/postgres-username
+Type: string
+Description: Postgres username (required)
+  Specify the OpenUEM database connection parameters 
+    
+  Note that the selected user must have the required permissions 
+  on the database so OpenUEM can create the schema
+
+Template: openuem-server/postgres-password
+Type: password
+Description: Postgres password (required)
+ Specify the OpenUEM database connection parameters
+
+Template: openuem-server/postgres-database
+Type: string
+Default: openuem
+Description: Postgres database name (required)
+ Specify the OpenUEM database connection parameters
+
+Template: openuem-server/domain
+Type: string
+Description: The domain on which your agents can be reached
+  OpenUEM needs to reach its components and the agents using DNS
+  Please, introduce the domain (e.g example.com) that your organization
+  uses to resolve computers names
+
+Template: openuem-server/certificate-generation
+Type: boolean
+Default: true
+Description: Do you wish that OpenUEM generate the required digital certificates? 
+  OpenUEM uses heavily digital certificates. OpenUEM can create a 
+  Certification Authority and generate all the digital certificates 
+  required for operation. If you already have your own Certification 
+  Authority you may skip this step consulting the docs which certificates 
+  you will have to generate on your own. If you're not sure, please answer 
+  Yes to the following question. Generated certificates will placed in 
+  /etc/openuem-server/certificates
+
+Template: openuem-server/certificate-org-name
+Type: string
+Description: Organization name
+  This information will be added or must me present in your digital 
+  certificates to help to identify them
+
+Template: openuem-server/certificate-org-country
+Type: string
+Default: ES
+Description: Organization Country (Optional, two letter code for your country) 
+  This information will be added or must me present in your digital 
+  certificates to help to identify them
+
+Template: openuem-server/certificate-org-province
+Type: string
+Description: Organization Province (Optional)
+  This information will be added or must me present in your digital 
+  certificates to help to identify them
+
+Template: openuem-server/certificate-org-locality
+Type: string
+Description: Organization Locality (Optional)
+  This information will be added or must me present in your digital 
+  certificates to help to identify them
+
+Template: openuem-server/certificate-org-address
+Type: string
+Description: Organization Address (Optional)
+  This information will be added or must me present in your digital 
+  certificates to help to identify them
+
+Template: openuem-server/ca-cert
+Type: string
+Default: /etc/openuem-server/certificates/ca/ca.cer
+Description: CA certificate file
+  Introduce the location of the file containing the CA (certification 
+  authority) certificate
+
+Template: openuem-server/nats-port
+Type: string
+Default: 4433
+Description: Introduce the port used by the NATS server
+  A NATS Server is responsible of the data exchange between OpenUEM 
+  components using messages
+
+Template: openuem-server/nats-url
+Type: string
+Default: tls://localhost:4433
+Description: Introduce the url of the NATS server 
+  A NATS Server is responsible of the data exchange between OpenUEM 
+  components using messages (example: tls://nats-server.example.com:4433)
+
+Template: openuem-server/nats-cert
+Type: string
+Default: /etc/openuem-server/certificates/nats/nats.cer
+Description: NATS certificate file
+  A NATS Server is responsible of the data exchange between OpenUEM 
+  components using messages. Introduce the location of the file 
+  containing the NATS certificate
+
+Template: openuem-server/nats-key
+Type: string
+Default: /etc/openuem-server/certificates/nats/nats.key
+Description: NATS private key
+  A NATS Server is responsible of the data exchange between OpenUEM 
+  components using messages. Introduce the location of the file 
+  containing the NATS private key
+
+Template: openuem-server/ocsp-port
+Type: string
+Default:8000
+Description: Introduce the port used by the OCSP Responder
+  An OCSP Responder is responsible of checking if the digital certificate 
+  is valid and that it hasn't been revoked
+
+Template: openuem-server/ocsp-url
+Type: string
+Default: http://localhost:8000
+Description: Introduce a comma separated list of valid OCSP Responders URLs
+  An OCSP Responder is responsible of checking if the digital certificate 
+  is valid and that it hasn't been revoked
+
+Template: openuem-server/ocsp-cert
+Type: string
+Default: /etc/openuem-server/certificates/ocsp/ocsp.cer
+Description: OCSP certificate file
+  An OCSP Responder is responsible of checking if the digital certificate 
+  is valid and that it hasn't been revoked. Introduce the location of the 
+  file containing the OCSP certificate
+
+Template: openuem-server/ocsp-key
+Type: string
+Default: /etc/openuem-server/certificates/ocsp/ocsp.key
+Description: OCSP private key
+  An OCSP Responder is responsible of checking if the digital certificate 
+  is valid and that it hasn't been revoked. Introduce the location of the 
+  file containing the OCSP private key
+
+Template: openuem-server/console-port
+Type: string
+Default:1323
+Description: Introduce the port used by the console
+  The web console allows you to administer and access OpenUEM's information
+
+Template: openuem-server/auth-port
+Type: string
+Default:1324
+Description: Introduce the port used by the auth server
+  The auth server validates digital certificates to log in OpenUEM's console
+
+Template: openuem-server/console-jwt-key
+Type: password
+Description: JWT Key
+  OpenUEM Console needs a private key to encrypt tokens. This key will be 
+  stored in Windows Credential Manager. Please, introduce a long and complex 
+  alphanumeric key (max: 32 characters)
+
+Template: openuem-server/console-jwt-key-repeat
+Type: password
+Description: Repeat the JWT Key
+  OpenUEM Console needs a private key to encrypt tokens. This key will be 
+  stored in Windows Credential Manager. Please, introduce a long and complex 
+  alphanumeric key (max: 32 characters)
+
+Template: openuem-server/console-cert
+Type: string
+Default: /etc/openuem-server/certificates/console/console.cer
+Description: Console certificate file
+  The web console allows you to administer and access OpenUEM's information. 
+  Introduce the location of the file containing the Console certificate
+
+Template: openuem-server/console-key
+Type: string
+Default: /etc/openuem-server/certificates/console/console.key
+Description: Console private key
+  The web console allows you to administer and access OpenUEM's information. 
+  Introduce the location of the file containing the Console private key
+
+Template: openuem-server/admin-cert-password
+Type: password
+Description: Insert an optional password
+  OpenUEM will generate a user's certificate with pfx extension that will 
+  allow you to access the console from a browser. The installer will try to 
+  add this certificate to your local personal store, but if you need to import 
+  it manually you'll find it at /etc/openuem-server/certificates/users. When 
+  you import the certificate a password will be asked and by default is changeit, 
+  you can introduce an alternative password for the certificate.
+
+Template: openuem-server/admin-cert-password-again
+Type: password
+Description: Repeat the password
+  OpenUEM will generate a user's certificate with pfx extension that will 
+  allow you to access the console from a browser. The installer will try to 
+  add this certificate to your local personal store, but if you need to import 
+  it manually you'll find it at /etc/openuem-server/certificates/users.When 
+  you import the certificate a password will be asked and by default is changeit, 
+  you can introduce an alternative password for the certificate.
+
+Template: openuem-server/agent-worker-cert
+Type: string
+Default: /etc/openuem-server/certificates/agent-worker/worker.cer
+Description: Agent Worker certificate file
+  The agent worker processes the information sent by OpenUEM agents. 
+  Introduce the location of the file containing the Agent Worker certificate
+
+Template: openuem-server/agent-worker-key
+Type: string
+Default: /etc/openuem-server/certificates/agent-worker/worker.key
+Description: Agent Worker private key file
+  The agent worker processes the information sent by OpenUEM agents. 
+  Introduce the location of the file containing the Agent Worker private key
+
+Template: openuem-server/notification-worker-cert
+Type: string
+Default: /etc/openuem-server/certificates/notification-worker/worker.cer
+Description: Notification Worker certificate file
+  The notification worker processes the requests to send SMTP messages. 
+  Introduce the location of the file containing the Notification Worker 
+  certificate
+
+Template: openuem-server/notification-worker-key
+Type: string
+Default: /etc/openuem-server/certificates/notification-worker/worker.key
+Description: Notification Worker private key file
+  The notification worker processes the requests to send SMTP messages. 
+  Introduce the location of the file containing the Notification Worker 
+  certificate
+
+Template: openuem-server/cert-manager-worker-cert
+Type: string
+Default: /etc/openuem-server/certificates/cert-manager-worker/worker.cer
+Description: Cert-Manager Worker certificate file
+  The cert-manager worker processes the requests to create new user 
+  certificates. Introduce the location of the file containing the 
+  Cert-Manager Worker certificate
+
+Template: openuem-server/cert-manager-worker-key
+Type: string
+Default: /etc/openuem-server/certificates/cert-manager-worker/worker.key
+Description: Cert-Manager Worker private key file
+  The cert-manager worker processes the requests to create new user 
+  certificates. Introduce the location of the file containing the 
+  Cert-Manager Worker certificate
