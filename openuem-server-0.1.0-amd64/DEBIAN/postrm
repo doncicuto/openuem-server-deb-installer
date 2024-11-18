@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+case "$1" in
+    remove|purge)
+
+        # Remove all package's questions from debconf's database.
+        db_purge
+
+        # Remove user
+        if getent passwd | grep -q '^openuem:'; then
+            userdel openuem
+        fi  
+        
+        # Remove config directory
+        if [ -d /etc/openuem-server ]; then
+            rm -rf /etc/openuem-server
+        fi
+
+        # Remove logs directory
+        rm -rf /var/log/openuem-server
+
+        # Remove services
+        rm -rf /etc/systemd/system/openuem-*
+        systemctl daemon-reload
+        
+        # Ref: https://thomas-leister.de/en/how-to-import-ca-root-certificate/
+        certname="OpenUEM CA"
+        ### For cert8 (legacy - DBM)
+        for certDB in $(find /home -name "cert8.db")
+        do
+            certdir=$(dirname ${certDB});
+            certutil -D -n "${certname}" -d dbm:${certdir}
+            certutil -F -n "admin - OpenUEM" -d dbm:${certdir}
+        done
+
+        ### For cert9 (SQL)
+        for certDB in $(find /home -name "cert9.db")
+        do
+            certdir=$(dirname ${certDB});
+            certutil -D -n "${certname}" -d sql:${certdir}
+            certutil -F -n "admin - OpenUEM" -d sql:${certdir}
+        done
+
+        # Remove /opt/openuem-server/bin
+        rm -rf /opt/openuem-server/bin
+    ;;
+
+    *)
+        exit 0
+    ;;
+esac
+
+exit 0

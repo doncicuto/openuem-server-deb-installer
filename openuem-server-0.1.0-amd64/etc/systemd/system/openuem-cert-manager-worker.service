@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenUEM Cert Manager Worker
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/openuem-server/bin/openuem-cert-manager-worker
+User=openuem
+Group=openuem
+
+[Install]
+WantedBy=network.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenUEM Agent Worker
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/openuem-server/bin/openuem-agent-worker
+User=openuem
+Group=openuem
+
+[Install]
+WantedBy=network.target

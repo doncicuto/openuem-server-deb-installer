@@ -1,10 +1,10 @@
 Package: openuem-server
 Version: 0.1.0
 Maintainer: Miguel Cabrerizo
-Architecture: all
+Architecture: amd64
 Description: OpenUEM is an open-source user endpoint manager for your enterprise
   OpenUEM allows you to keep an inventory of your IT endpoints information as reported by OpenUEM agents.
   You can deploy software to the endpoints, browse directories or provide remote assistance from OpenUEM's web console
 Essential: no
 Priority: optional
-Pre-Depends: debconf,crudini,ca-certificates
+Pre-Depends: debconf,crudini,libnss3-tools

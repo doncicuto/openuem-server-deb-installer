@@ -24,4 +24,10 @@ The installer will offer to generate the required digital certificates. The data
 
 ## How to create the package
 
-dpkg-deb --build ./openuem-server_0.1.0_all
+./create-installer.sh
+
+### TODO
+
+- Copy The NATS server bin with license and README to bin/nats
+- Allow user to go back to previous step
+- Sandboxing all OpenUEM services (sudo systemd-analyze security openuem-console.service --no-pager to check current OK status)

@@ -2,7 +2,7 @@ Template: openuem-server/select-components
 Type: multiselect
 Choices: OpenUEM Web Console, OpenUEM NATS Server, OpenUEM Agent Worker, OpenUEM Notification Worker, OpenUEM Cert Manager Worker, OpenUEM OCSP Responder
 Default: OpenUEM Web Console, OpenUEM NATS Server, OpenUEM Agent Worker, OpenUEM Notification Worker, OpenUEM Cert Manager Worker, OpenUEM OCSP Responder
-Description: Select components to be installed
+Description: Select the components you wish to install
  OpenUEM has many components that can be installed on the same machine or distributed on several machines
 
 Template: openuem-server/postgres-host
@@ -38,7 +38,7 @@ Description: Postgres database name (required)
 
 Template: openuem-server/domain
 Type: string
-Description: The domain on which your agents can be reached
+Description: Domain
   OpenUEM needs to reach its components and the agents using DNS
   Please, introduce the domain (e.g example.com) that your organization
   uses to resolve computers names
@@ -92,6 +92,13 @@ Default: /etc/openuem-server/certificates/ca/ca.cer
 Description: CA certificate file
   Introduce the location of the file containing the CA (certification 
   authority) certificate
+
+Template: openuem-server/ca-key
+Type: string
+Default: /etc/openuem-server/certificates/ca/ca.key
+Description: CA private key file
+  Introduce the location of the file containing the CA (certification 
+  authority) private key
 
 Template: openuem-server/nats-port
 Type: string
@@ -212,6 +219,18 @@ Description: Repeat the password
   it manually you'll find it at /etc/openuem-server/certificates/users.When 
   you import the certificate a password will be asked and by default is changeit, 
   you can introduce an alternative password for the certificate.
+
+
+Template: openuem-server/admin-add-cert-username
+Type: string
+Description: Username
+  OpenUEM can add the user's certificate to your browsers certificates store
+  Introduce the username of the user that you want the certificate to be
+  autoinstalled and restart browsers once the package installation finishes. 
+ 
+  Enter an empty string to avoid the automatic installed and
+  note that you'll have to import the certificate to your browser's personal
+  certificate which will be stored in /etc/openuem-server/certificates/users/admin.pfx
 
 Template: openuem-server/agent-worker-cert
 Type: string

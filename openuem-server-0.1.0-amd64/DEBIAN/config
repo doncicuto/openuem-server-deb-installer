@@ -6,7 +6,7 @@ host=`hostname -s`
 allComponents="OpenUEM Web Console, OpenUEM NATS Server, OpenUEM Agent Worker, OpenUEM Notification Worker, OpenUEM Cert Manager Worker, OpenUEM OCSP Responder"
 
 # TODO allow user to go back
-db_capb backup
+# db_capb backup
 
 # Select components 
 db_title OpenUEM components selection
@@ -18,7 +18,7 @@ db_get openuem-server/select-components
 components=$RET
 
 # Postgres dialog
-if [ "$components" = "$allComponents" ] || [ ]; then
+if [ "$components" = "$allComponents" ] || [ "$components" != "OpenUEM NATS Server" ]; then
     while [ -z "$postgres_host" ]; do
         db_title PostgreSQL Configuration
         db_input high openuem-server/postgres-host || true
@@ -96,6 +96,11 @@ if [ "$generateCerts" != "true" ]; then
     db_title OpenUEM CA
     db_input high openuem-server/ca-cert || true
     db_go
+    if echo "$components" | grep -q "\\<OpenUEM Cert Manager Worker\\>"; then
+        db_title OpenUEM CA
+        db_input high openuem-server/ca-key || true
+        db_go
+    fi
 fi
 
 # Ask information for NATS port if all components have been selected or just the NATS
@@ -215,8 +220,8 @@ if [ "$generateCerts" = "true" ]; then
         db_go
         db_get openuem-server/admin-cert-password
         admin_cert_password=$RET
-        if [ -z "$admin_cert_password" ]; then
-            admin_cert_password_repeat="$admin_cert_password"
+        if [ -z $admin_cert_password ]; then
+            admin_cert_password_repeat=$admin_cert_password
         else
             db_title OpenUEM Admin certificate
             db_input high openuem-server/admin-cert-password-again || true
@@ -225,4 +230,10 @@ if [ "$generateCerts" = "true" ]; then
             admin_cert_password_repeat=$RET
         fi
     done
+fi
+
+if [ "$generateCerts" = "true" ]; then
+    db_title OpenUEM Admin certificate
+    db_input high openuem-server/admin-add-cert-username || true
+    db_go
 fi
