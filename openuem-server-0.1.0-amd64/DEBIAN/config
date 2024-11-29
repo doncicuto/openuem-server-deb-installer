@@ -74,8 +74,8 @@ if [ "$components" = "$allComponents" ]; then
     generateCerts=$RET
 fi
 
-# Ask information for certificates
-if [ "$generateCerts" = "true" ] || echo "$components" | grep -q "\\<OpenUEM NATS Server\\>"; then
+# Ask information for certificates if going to generate them or if NATS or Console component has been selected
+if [ "$generateCerts" = "true" ] || echo "$components" | grep -q "\\<OpenUEM NATS Server\\>" || echo "$components" | grep -q "\\<OpenUEM Web Console\\>"; then
     while [ -z $org_name ]; do
         db_title Information about your Organization
         db_input high openuem-server/certificate-org-name || true
