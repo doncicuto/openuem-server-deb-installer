@@ -238,6 +238,14 @@ if [ "$generateCerts" = "true" ]; then
     /opt/openuem-server/bin/openuem-cert-manager client-cert --name "OpenUEM SFTP Client" --dst "/etc/openuem-server/certificates/console" --type="console" --org "$org_name" --country "$org_country" --province "$org_province" --locality "$org_locality" --address "$org_address" --years-valid 2 --filename "sftp" --ocsp $ocsp_url --description "SFTP Client"  --cacert "/etc/openuem-server/certificates/ca/ca.cer" --cakey "/etc/openuem-server/certificates/ca/ca.key" --dburl $db_url
 fi
 
+# Updater Certificate     
+if [ ! -d /etc/openuem-server/certificates/updater ]; then
+    mkdir -p /etc/openuem-server/certificates/updater
+fi
+if [ "$generateCerts" = "true" ]; then
+    /opt/openuem-server/bin/openuem-cert-manager client-cert --name "OpenUEM Updater Client" --dst "/etc/openuem-server/certificates/updater" --type="updater" --org "$org_name" --country "$org_country" --province "$org_province" --locality "$org_locality" --address "$org_address" --years-valid 2 --filename "updater" --ocsp $ocsp_url --description "Updater Client"  --cacert "/etc/openuem-server/certificates/ca/ca.cer" --cakey "/etc/openuem-server/certificates/ca/ca.key" --dburl $db_url
+fi
+
 
 # Agent Certificate     
 if [ ! -d /etc/openuem-server/certificates/agents ]; then

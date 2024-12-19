@@ -171,6 +171,8 @@ if [ "$components" = "$allComponents" ] || [ "$components" = "OpenUEM Web Consol
     done
 fi
 
+# TODO - Ask for reverse proxy auth port and domain
+
 while [ -z "$jwt_key" ] || [ -z "$jwt_key_repeat" ] || [ "$jwt_key" != "$jwt_key_repeat" ]; do
     db_title OpenUEM Web Console
     db_input high openuem-server/console-jwt-key || true
