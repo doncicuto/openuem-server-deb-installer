@@ -1,0 +1,37 @@
+[Unit]
+Description=OpenUEM Console
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/openuem-server/bin/openuem-console
+User=openuem
+Group=openuem
+ProtectHome=yes
+PrivateDevices=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+PrivateTmp=yes
+PrivateUsers=yes
+PrivateIPC=yes
+RemoveIPC=yes
+ProtectHostname=yes
+NoNewPrivileges=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+SystemCallArchitectures=native
+CapabilityBoundingSet=
+LockPersonality=yes
+ProcSubset=pid
+ProtectProc=noaccess
+ProtectClock=yes
+ProtectControlGroups=yes
+ProtectKernelLogs=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+UMask=0077
+ProtectSystem=yes
+ProtectProc=noaccess
+
+[Install]
+WantedBy=network.target

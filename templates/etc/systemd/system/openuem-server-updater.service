@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenUEM Server Updater
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/openuem-server/bin/openuem-server-updater
+User=openuem
+Group=openuem
+
+[Install]
+WantedBy=network.target

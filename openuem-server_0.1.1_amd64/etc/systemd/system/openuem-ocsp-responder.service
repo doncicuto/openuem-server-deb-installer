@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenUEM OCSP Responder
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/openuem-server/bin/openuem-ocsp-responder
+User=openuem
+Group=openuem
+
+[Install]
+WantedBy=network.target

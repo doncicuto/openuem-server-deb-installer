@@ -55,6 +55,12 @@ Description: Do you wish that OpenUEM generate the required digital certificates
   Yes to the following question. Generated certificates will placed in 
   /etc/openuem-server/certificates
 
+Template: openuem-server/certificate-generation-for-reverse-proxy
+Type: string
+Description: Insert the domain name for the reverse proxy (leave it empty if no reverse proxy is used) 
+  If a reverse proxy is used a certificate will be generated associated to the domain 
+  (for example console.example.com) where you want to get access to the console.
+
 Template: openuem-server/certificate-org-name
 Type: string
 Description: Organization name
@@ -160,6 +166,11 @@ Description: OCSP private key
   is valid and that it hasn't been revoked. Introduce the location of the 
   file containing the OCSP private key
 
+Template: openuem-server/console-server
+Type: string
+Description: Introduce the domain name for the console server
+  The web console allows you to administer and access OpenUEM's information
+
 Template: openuem-server/console-port
 Type: string
 Default:1323
@@ -171,6 +182,16 @@ Type: string
 Default:1324
 Description: Introduce the port used by the auth server
   The auth server validates digital certificates to log in OpenUEM's console
+
+Template: openuem-server/reverse-proxy-domain
+Type: string
+Description: Introduce the domain name used by the reverse proxy
+  Set an empty value if you're not using a reverse proxy
+
+Template: openuem-server/reverse-proxy-auth-port
+Type: string
+Description: Introduce the port used by the reverse proxy auth server
+  Set an empty value if you're not using a reverse proxy
 
 Template: openuem-server/console-jwt-key
 Type: password
@@ -200,6 +221,14 @@ Description: Console private key
   The web console allows you to administer and access OpenUEM's information. 
   Introduce the location of the file containing the Console private key
 
+Template: openuem-server/sftp-key
+Type: string
+Default: /etc/openuem-server/certificates/console/console.key
+Description: SFTP private key
+  The web console allows you to browse remote disks using SFTP. 
+  Introduce the location of the file containing the private key to authenticate
+  against the SFTP server
+
 Template: openuem-server/admin-cert-password
 Type: password
 Description: Insert an optional password
@@ -220,15 +249,14 @@ Description: Repeat the password
   you import the certificate a password will be asked and by default is changeit, 
   you can introduce an alternative password for the certificate.
 
-
 Template: openuem-server/admin-add-cert-username
 Type: string
 Description: Username
   OpenUEM can add the user's certificate to your browsers certificates store
-  Introduce the username of the user that you want the certificate to be
-  autoinstalled and restart browsers once the package installation finishes. 
+  Introduce the username that you want the certificate to be named
+  and restart browsers once the package installation finishes. 
  
-  Enter an empty string to avoid the automatic installed and
+  Enter an empty string to avoid the automatic installation and
   note that you'll have to import the certificate to your browser's personal
   certificate which will be stored in /etc/openuem-server/certificates/users/admin.pfx
 
@@ -277,3 +305,41 @@ Description: Cert-Manager Worker private key file
   The cert-manager worker processes the requests to create new user 
   certificates. Introduce the location of the file containing the 
   Cert-Manager Worker certificate
+
+Template: openuem-server/nats-cluster
+Type: boolean
+Default: false
+Description: Do you want to configure a NATS cluster? 
+  You can cluster servers together for high volume messaging 
+  systems and resiliency and high availability. The number of NATS servers 
+  that can be part of a cluster is 3 or 5 servers (always an odd number)
+
+Template: openuem-server/nats-cluster-name
+Type: string
+Default: openuem-cluster
+Description: Introduce the name for the cluster
+
+Template: openuem-server/nats-cluster-port
+Default:4444
+Type: string
+Description: Introduce the port number that will be used by the NATS server to listen other cluster's servers queries
+
+Template: openuem-server/nats-cluster-other-servers
+Type: string
+Description: In a NATS cluster we must provide a comma separated list of
+  the other servers in the cluster in the format hostname:cluster_port
+  (for example server2.example.com:4444,server3.example.com:4444)
+
+Template: openuem-server/updater-cert
+Type: string
+Default: /etc/openuem-server/certificates/updater/updater.cer
+Description: Updater certificate file
+  OpenUEM has an updater to update servers on demand from the console.
+  Introduce the location of the file containing the Updater certificate
+
+Template: openuem-server/updater-key
+Type: string
+Default: /etc/openuem-server/certificates/updater/updater.key
+Description: Updater private key
+  OpenUEM has an updater to update servers on demand from the console.
+  Introduce the location of the file containing the Updater private key

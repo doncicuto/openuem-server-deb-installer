@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenUEM NATS Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/openuem-server/bin/openuem-nats-service
+User=openuem
+Group=openuem
+
+[Install]
+WantedBy=network.target

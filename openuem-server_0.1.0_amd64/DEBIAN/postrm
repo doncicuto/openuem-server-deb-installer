@@ -4,10 +4,22 @@
 . /usr/share/debconf/confmodule
 
 case "$1" in
-    remove|purge)
-
+    purge)
         # Remove all package's questions from debconf's database.
         db_purge
+    ;;
+    
+    remove)
+        # Stop services        
+        systemctl daemon-reload
+        systemctl stop openuem-console
+        systemctl stop openuem-ocsp-responder
+        systemctl stop openuem-nats
+        systemctl stop openuem-agent-worker
+        systemctl stop openuem-notification-worker
+        systemctl stop openuem-cert-manager-worker
+        systemctl stop openuem-server-updater
+        systemctl daemon-reload
 
         # Remove user
         if getent passwd | grep -q '^openuem:'; then
@@ -46,6 +58,9 @@ case "$1" in
 
         # Remove /opt/openuem-server/bin
         rm -rf /opt/openuem-server/bin
+
+        # Remove sudoers.d
+        rm -rf /etc/sudoers.d/openuem
     ;;
 
     *)
