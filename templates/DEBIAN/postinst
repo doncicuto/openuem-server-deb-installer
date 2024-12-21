@@ -447,6 +447,9 @@ chown openuem:openuem $CONFIGFILE
 # Change ownership for /etc/openuem
 chown -R openuem:openuem /etc/openuem-server
 
+# Change access to /etc/openuem/certificates
+chmod -R ug+rwX,o-rwx /etc/openuem-server/certificates
+
 # Change ownsership for /opt/openuem-server
 chown -R openuem:openuem /opt/openuem-server
 
